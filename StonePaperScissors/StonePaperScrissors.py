@@ -1,8 +1,72 @@
 import random
-from Art import *
+import Art
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtGui import QFont
 
+import sys
 match = 3
 
+class Window(QMainWindow):
+    def __init__(self):
+        super(Window, self).__init__()
+        self.setWindowTitle("Камень, ножницы, бумага")
+        self.setGeometry(300, 250, 700, 400) # x,  y, ширина, длина
+
+        self.ascii_image = QtWidgets.QLabel(self)
+
+        self.main_text = QtWidgets.QLabel(self) # в каком окне будет отображться
+        self.main_text.setText("Добро пожаловать в игру 'Камень-ножницы-бумага!'")
+        self.main_text.move(160,10)
+        self.main_text.adjustSize() # подстраивает размер объекта под его содержимое
+
+        self.btn_rock = QtWidgets.QPushButton(self)
+        self.btn_rock.move(70, 50)
+        self.btn_rock.setText("Камень")
+        self.btn_rock.adjustSize()
+        self.btn_rock.clicked.connect(self.add_rock)
+
+        self.btn_paper = QtWidgets.QPushButton(self)
+        self.btn_paper.move(70+245, 50)
+        self.btn_paper.setText("Бумага")
+        self.btn_paper.adjustSize()
+        self.btn_paper.clicked.connect(self.add_paper)
+
+        self.btn_scissors = QtWidgets.QPushButton(self)
+        self.btn_scissors .move(70+245*2, 50)
+        self.btn_scissors.setText("Ножницы")
+        self.btn_scissors.adjustSize()
+        self.btn_scissors.clicked.connect(self.add_scissors)
+        
+    def add_rock(self):
+        self.ascii_image.setText(str(Art.rock))
+        self.ascii_image.move(300, 100)
+        self.ascii_image.adjustSize()
+
+    def add_paper(self):
+        font = QFont()
+        font.setFamily("Courier New")
+        self.ascii_image.setFont(font)
+        self.ascii_image.setText(Art.paper)
+        self.ascii_image.move(300, 100)
+        self.ascii_image.adjustSize()
+
+    def add_scissors(self):
+        self.ascii_image.setText(str(Art.scissors))
+        print(Art.scissors)
+        self.ascii_image.move(300, 100)
+        self.ascii_image.adjustSize()
+
+    
+def application():
+    app = QApplication(sys.argv) # объект приложения
+    window = Window()
+
+    
+    window.show()
+    sys.exit(app.exec_())
+    
+    
 class Game:
     def __init__(self, match):
         """Класс для игры 'Камень-ножницы-бумага'."""
@@ -88,5 +152,6 @@ class Game:
 
 
 if __name__ == "__main__":
+    application()
     game = Game(match)
     game.game_cycle()

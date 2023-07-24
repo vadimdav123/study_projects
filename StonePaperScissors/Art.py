@@ -1,7 +1,7 @@
 # ASCII Arts for rock, paper, a nd scissors by Veronica Karlsson
 
 rock = '''  
-    _______
+    ______
 ---'   ____)  
       (_____)  
       (_____)  
